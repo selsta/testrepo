@@ -56,15 +56,14 @@ ENV CFLAGS="${CFLAGS} -fPIC -pthread"
 ENV CXXFLAGS="${CXXFLAGS} -fPIC -pthread"
 
 ## Boost
-ARG BOOST_VERSION=1_70_0
-ARG BOOST_VERSION_DOT=1.70.0
-ARG BOOST_HASH=430ae8354789de4fd19ee52f3b1f739e1fba576f0aded0897c3c2bc00fb38778
+ARG BOOST_VERSION=1_80_0
+ARG BOOST_VERSION_DOT=1.80.0
+ARG BOOST_HASH=4b2136f98bdd1f5857f1c3dea9ac2018effe65286cf251534b6ae20cc45e1847
 RUN set -ex \
-    && curl -s -L -o  boost_${BOOST_VERSION}.tar.bz2 https://downloads.getmonero.org/libs/boost_${BOOST_VERSION}.tar.bz2 \
-    && echo "${BOOST_HASH}  boost_${BOOST_VERSION}.tar.bz2" | sha256sum -c \
-    && tar -xjf boost_${BOOST_VERSION}.tar.bz2 \
+    && curl -s -L -o  boost_${BOOST_VERSION}.tar.gz https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION_DOT}/source/boost_${BOOST_VERSION}.tar.gz \
+    && echo "${BOOST_HASH}  boost_${BOOST_VERSION}.tar.gz" | sha256sum -c \
+    && tar -xf boost_${BOOST_VERSION}.tar.gz \
     && cd boost_${BOOST_VERSION} \
-    && sed -i -e 's/use(* m_instance)/if (m_instance) use(* m_instance)/' boost/serialization/singleton.hpp \
     && ./bootstrap.sh --with-toolset=clang \
     && ./b2 --build-type=minimal link=static runtime-link=static --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread --with-locale threading=multi threadapi=pthread cflags="$CFLAGS" cxxflags="$CXXFLAGS" stage
 ENV BOOST_ROOT /usr/local/boost_${BOOST_VERSION}
