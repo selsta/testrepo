@@ -56,9 +56,9 @@ ENV CFLAGS="${CFLAGS} -fPIC -pthread"
 ENV CXXFLAGS="${CXXFLAGS} -fPIC -pthread"
 
 ## Boost
-ARG BOOST_VERSION=1_80_0
-ARG BOOST_VERSION_DOT=1.80.0
-ARG BOOST_HASH=4b2136f98bdd1f5857f1c3dea9ac2018effe65286cf251534b6ae20cc45e1847
+ARG BOOST_VERSION=1_79_0
+ARG BOOST_VERSION_DOT=1.79.0
+ARG BOOST_HASH=273f1be93238a068aba4f9735a4a2b003019af067b9c183ed227780b8f36062c
 RUN set -ex \
     && curl -s -L -o  boost_${BOOST_VERSION}.tar.gz https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION_DOT}/source/boost_${BOOST_VERSION}.tar.gz \
     && echo "${BOOST_HASH}  boost_${BOOST_VERSION}.tar.gz" | sha256sum -c \
